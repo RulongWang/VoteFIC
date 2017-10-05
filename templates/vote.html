@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>2017 GLCM FinLab Innovation Competition</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src = "/static/image-picker.min.js"></script>
+  <link rel="stylesheet" href="/static/image-picker.css">
+  <style type="text/css">
+  
+  .item{
+  	margin:10px;
+  	padding:10px;
+  	border:1px solid #eee;
+  }
+  .desc{
+  
+  }
+  .voted{
+      backgroun-color:red;
+  }
+  .jumcolor{
+  	background-color:#FF0000;
+  	color:#FFFFFF;
+  }
+  .topspace{
+  	margin-top:10px;
+  }
+     .bottomspace{
+      margin:10px;
+      padding:10px;
+      text-align: center;
+      border-radius: 10px;
+  }
+  </style>
+</head>
+<body>
+  
+<div class="container-fluid ">
+
+<div class="jumbotron topspace jumcolor">
+    <h1>2017 GLCM FinLab Innovation Competition</h1> 
+    
+</div>
+
+<!-- Vote modal -->
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">请选择给<span id="ideaNum"></span>号创业者的礼物</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="{{ url_for('addVote') }}" method="post">
+          <div class="form-group">
+              <input type="hidden"  id="ideavalue" value="" name="ideavalue">
+              <select class="image-picker show-html" id="gifttype" name="gifttype">
+
+                  <option data-img-src="/static/meinv.jpg" data-img-class="first" data-img-alt="Page 1" id = "op1" value="1">美女 </option>
+                  <option data-img-src="/static/jirou.jpg" data-img-alt="Page 2" value="2">肌肉男</option>
+                  <option data-img-src="/static/car.png" data-img-alt="Page 3" value="3">汽车</option>
+
+                  <option data-img-src="/static/tuolaji.jpg" data-img-alt="Page 4" value="4">拖拉机</option>
+                  <option data-img-src="/static/dji.jpg" data-img-alt="Page 5" value="5">无人机</option>
+                  <option data-img-src="/static/iphonex.jpg" data-img-alt="Page 6" value="6"> IphoneX</option>
+
+                  <option data-img-src="/static/egg.jpg" data-img-alt="Page 7" value="7">鸡蛋</option>
+                  <option data-img-src="/static/youzi.jpg" data-img-alt="Page 8" value="8">柚子</option>
+                  <option data-img-src="/static/rose.jpg" data-img-alt="Page 9" value="9">玫瑰</option>
+
+                </select>
+            <label for="voteid" id="votelabel" class="form-control-label">给创业者的悄悄话</label>
+
+            <input type="text" class="form-control" id="comment" name="comment">
+          </div>
+          <div class="modal-footer">
+            <button type="button" id = "doVote" class="btn btn-success" onclick="Vote();" data-dismiss="modal">送礼物</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">再想想</button>
+      </div>
+        </form>     
+       </div>
+
+    </div>
+  </div>
+</div>
+<div class="row item">
+  <div class="col-md-12 col-sm-12 " >
+  	<p>Description </p>
+  </div>
+ 
+</div>
+ <div class="row item">
+  <div class="col-md-12 col-sm-12" >
+  	<div class="col-md-4 col-sm-4 pull-left">
+       
+       <img src="https://www.w3schools.com/bootstrap/paris.jpg"  class="img-circle" width ="100" height="100" alt="1">
+              
+    </div>
+    
+    <div class="desc col-md-4 col-sm-4">
+    	<p>
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		
+      </p>
+    	
+    </div>
+    
+    <div class="col-md-4 col-sm-4 pull-right ">
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(1);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt1" class="">Vote</span></button>
+   </div>	
+    	  	
+  </div> 
+ 
+</div><!-- end of row-->
+ <div class="row item">
+  <div class="col-md-12 col-sm-12" >
+  	<div class="col-md-4 col-sm-4 pull-left">
+       
+       <img src="https://www.w3schools.com/bootstrap/paris.jpg"  class="img-circle" width ="100" height="100" alt="1">
+              
+    </div>
+    
+    <div class="desc col-md-4 col-sm-4">
+    	<p>
+    		Description of your team your idea
+      </p>
+    	
+    </div>
+    
+    <div class="col-md-4 col-sm-4 pull-right ">
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(2);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt2" class="">Vote</span></button>
+   </div>	
+    	  	
+  </div> 
+ 
+</div><!-- end of row-->
+  <div class="row item">
+  <div class="col-md-12 col-sm-12" >
+  	<div class="col-md-4 col-sm-4 pull-left">
+       
+       <img src="https://www.w3schools.com/bootstrap/paris.jpg"  class="img-circle" width ="100" height="100" alt="1">
+              
+    </div>
+    
+    <div class="desc col-md-4 col-sm-4">
+    	<p>
+    		Description of your team your idea
+      </p>
+    	
+    </div>
+    
+    <div class="col-md-4 col-sm-4 pull-right ">
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(3);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt3" class="">Vote</span></button>
+   </div>	
+    	  	
+  </div> 
+ 
+</div><!-- end of row-->
+ <div class="row item">
+  <div class="col-md-12 col-sm-12" >
+  	<div class="col-md-4 col-sm-4 pull-left">
+       
+       <img src="https://www.w3schools.com/bootstrap/paris.jpg"  class="img-circle" width ="100" height="100" alt="1">
+              
+    </div>
+    
+    <div class="desc col-md-4 col-sm-4">
+    	<p>
+    		Description of your team your idea
+      </p>
+    	
+    </div>
+    
+    <div class="col-md-4 col-sm-4 pull-right ">
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(4);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt4" class="">Vote</span></button>
+   </div>	
+    	  	
+  </div> 
+ 
+</div><!-- end of row-->
+         <div class="row item">
+  <div class="col-md-12 col-sm-12" >
+  	<div class="col-md-4 col-sm-4 pull-left">
+       
+       <img src="https://www.w3schools.com/bootstrap/paris.jpg"  class="img-thumbnail" width ="100" height="100"  alt="2">
+              
+    </div>
+    
+    <div class="desc col-md-4 col-sm-4">
+    	<p>
+    		Description of your team your idea
+      </p>
+    	
+    </div>
+    
+    <div class="col-md-4 col-sm-4 pull-right ">
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(5);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt5" class="">Vote</span></button>
+   </div>	
+    	  	
+  </div> 
+ 
+</div><!-- end of row-->
+                
+
+	
+</div>
+<div id="footer"class="row bottomspace jumcolor ">
+    <p>2017 GLCM FIC Committee</p>
+</div>
+
+<script>
+     var ideaNum = 0;
+     var chance = 0;
+     $(function() {
+
+         $("select").imagepicker({
+             hide_select: true,
+             show_label: true
+         });
+         checkVoteRecord();
+
+
+     });
+
+     function checkVoteRecord() {
+         $.ajax({
+                url: '/getVotes',
+                type: 'POST',
+                success: function(response){
+{#                    $("#bt".concat(ideaNum.toString())).addClass("glyphicon glyphicon-ok");#}
+{#                    $("#bt".concat(ideaNum.toString())).text("已投");#}
+{#                    $("#bt".concat(ideaNum.toString())).parent().addClass("disabled hidden");#}
+                    console.log(response);
+                    console.log(response.length);
+                    chance = response.length;
+                    for (var i in response){
+                        //alert(response[i].value + "选手号码" + response[i].ideanum);
+                        if(response[i].value == 3){
+                            $("#gifttype option[value='1']" ).remove();
+                            $("#gifttype option[value='2']" ).remove();
+                            $("#gifttype option[value='3']" ).remove();
+
+
+                        }
+                        if(response[i].value == 2){
+                            $("#gifttype option[value='4']" ).remove();
+                            $("#gifttype option[value='5']" ).remove();
+                            $("#gifttype option[value='6']" ).remove();
+
+                        }
+                        if(response[i].value ==1){
+                            $("#gifttype option[value='7']" ).remove();
+                            $("#gifttype option[value='8']" ).remove();
+                            $("#gifttype option[value='9']" ).remove();
+
+                        }
+                        // filter all voted
+                        //alert("#bt".concat(response[i].ideanum.toString()));
+                        $("#bt".concat(response[i].ideanum)).parent().addClass("disabled hidden");
+
+
+
+                    }
+
+
+
+{#                    var parsed = JSON.parse(response);#}
+{#                    console.log(parsed)#}
+{#                  $("#bt".concat(ideaNum.toString())).parent().parent().parent().addClass("voted");#}
+
+
+
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+     }
+    function updateIdeaNum(vote){
+        ideaNum= vote;
+        $("#ideaNum").html(vote);
+        $("#ideavalue").val(vote);
+        checkVoteRecord();
+
+    }
+
+    function Vote(){
+            var ideavalue = ideaNum
+            var gifttype = $('#gifttype').val();
+            var comment = $('#comment').val();
+
+            if(chance >=3){
+                alert("3次投票机会用光");
+            }else {
+                    if(gifttype !=  "" && gifttype != null) {
+                    $.ajax({
+                       url: '/addVote',
+                       data: {ideavalue: ideavalue, gifttype: gifttype, comment: comment},
+                        type: 'POST',
+                          success: function (response) {
+                        {#                    $("#bt".concat(ideaNum.toString())).addClass("glyphicon glyphicon-ok");#}
+                        {#                    $("#bt".concat(ideaNum.toString())).text("已投");#}
+                        $("#bt".concat(ideaNum.toString())).parent().addClass("disabled hidden");
+                        checkVoteRecord();
+                        alert("投票成功");
+                        //var parsed = JSON.parse(response);
+
+                        {#                  $("#bt".concat(ideaNum.toString())).parent().parent().parent().addClass("voted");#}
+
+
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }else{
+                     alert("请选择礼物");
+                }
+
+            }
+
+
+    }
+
+
+</script>
+</body>
+</html>
