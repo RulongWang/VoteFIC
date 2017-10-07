@@ -114,6 +114,12 @@ def getVotes():
         rs = query_db('select ideanum,value from voting where voterid=?',(voteID,))
         return jsonify(rs)
 
+@app.route("/s",methods=['POST','GET'])
+def showResult():
+    error = None
+    return render_template('result.html')
+
+
 @app.route("/reset",methods=['POST','GET'])
 def reset():
     error = None

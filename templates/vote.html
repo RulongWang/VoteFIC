@@ -63,17 +63,17 @@
               <input type="hidden"  id="ideavalue" value="" name="ideavalue">
               <select class="image-picker show-html" id="gifttype" name="gifttype">
 
-                  <option data-img-src="/static/meinv.jpg" data-img-class="first" data-img-alt="Page 1" id = "op1" value="1">美女 </option>
-                  <option data-img-src="/static/jirou.jpg" data-img-alt="Page 2" value="2">肌肉男</option>
-                  <option data-img-src="/static/car.png" data-img-alt="Page 3" value="3">汽车</option>
+                  <option data-img-src="/static/meinv.jpg" data-img-class="first" data-img-alt="Page 1" id = "op1" value="1">美女（3个金币） </option>
+                  <option data-img-src="/static/jirou.jpg" data-img-alt="Page 2" value="2">肌肉男（3个金币）</option>
+                  <option data-img-src="/static/car.png" data-img-alt="Page 3" value="3">汽车（3个金币）</option>
 
-                  <option data-img-src="/static/tuolaji.jpg" data-img-alt="Page 4" value="4">拖拉机</option>
-                  <option data-img-src="/static/dji.jpg" data-img-alt="Page 5" value="5">无人机</option>
-                  <option data-img-src="/static/iphonex.jpg" data-img-alt="Page 6" value="6"> IphoneX</option>
+                  <option data-img-src="/static/tuolaji.jpg" data-img-alt="Page 4" value="4">拖拉机（2个金币）</option>
+                  <option data-img-src="/static/dji.jpg" data-img-alt="Page 5" value="5">无人机（2个金币）</option>
+                  <option data-img-src="/static/iphonex.jpg" data-img-alt="Page 6" value="6"> IphoneX（2个金币）</option>
 
-                  <option data-img-src="/static/egg.jpg" data-img-alt="Page 7" value="7">鸡蛋</option>
-                  <option data-img-src="/static/youzi.jpg" data-img-alt="Page 8" value="8">柚子</option>
-                  <option data-img-src="/static/rose.jpg" data-img-alt="Page 9" value="9">玫瑰</option>
+                  <option data-img-src="/static/egg.jpg" data-img-alt="Page 7" value="7">鸡蛋（1个金币）</option>
+                  <option data-img-src="/static/youzi.jpg" data-img-alt="Page 8" value="8">柚子（1个金币）</option>
+                  <option data-img-src="/static/rose.jpg" data-img-alt="Page 9" value="9">玫瑰（1个金币）</option>
 
                 </select>
             <label for="voteid" id="votelabel" class="form-control-label">给创业者的悄悄话</label>
@@ -226,6 +226,8 @@
 <script>
      var ideaNum = 0;
      var chance = 0;
+     var usedGift =[];
+
      $(function() {
 
          $("select").imagepicker({
@@ -254,25 +256,27 @@
                             $("#gifttype option[value='1']" ).remove();
                             $("#gifttype option[value='2']" ).remove();
                             $("#gifttype option[value='3']" ).remove();
-
+                            usedGift.push(response[i].value);
 
                         }
                         if(response[i].value == 2){
                             $("#gifttype option[value='4']" ).remove();
                             $("#gifttype option[value='5']" ).remove();
                             $("#gifttype option[value='6']" ).remove();
+                            usedGift.push(response[i].value);
 
                         }
                         if(response[i].value ==1){
                             $("#gifttype option[value='7']" ).remove();
                             $("#gifttype option[value='8']" ).remove();
                             $("#gifttype option[value='9']" ).remove();
+                            usedGift.push(response[i].value);
 
                         }
                         // filter all voted
                         //alert("#bt".concat(response[i].ideanum.toString()));
                         $("#bt".concat(response[i].ideanum)).parent().addClass("disabled hidden");
-
+                        $(".first").removeClass(".first");
 
 
                     }
@@ -304,39 +308,82 @@
             var gifttype = $('#gifttype').val();
             var comment = $('#comment').val();
 
-            if(chance >=3){
-                alert("3次投票机会用光");
-            }else {
-                    if(gifttype !=  "" && gifttype != null) {
-                    $.ajax({
-                       url: '/addVote',
-                       data: {ideavalue: ideavalue, gifttype: gifttype, comment: comment},
-                        type: 'POST',
-                          success: function (response) {
-                        {#                    $("#bt".concat(ideaNum.toString())).addClass("glyphicon glyphicon-ok");#}
-                        {#                    $("#bt".concat(ideaNum.toString())).text("已投");#}
-                        $("#bt".concat(ideaNum.toString())).parent().addClass("disabled hidden");
-                        checkVoteRecord();
-                        alert("投票成功");
-                        //var parsed = JSON.parse(response);
+            var giftvalue = getGiftValue(gifttype);
+            var index = $.inArray("giftvalue", usedGift);   //结果：index=1
+            if (index >= 0) {
+                  alert("同等价值的礼物已经用光");
+            } else {
+                 if(chance >=3){
+                        alert("3次投票机会用光");
+                    }else
+                        {
+                            if(gifttype !=  "" && gifttype != null) {
+                            $.ajax({
+                               url: '/addVote',
+                               data: {ideavalue: ideavalue, gifttype: gifttype, comment: comment},
+                                type: 'POST',
+                                  success: function (response) {
+                                {#                    $("#bt".concat(ideaNum.toString())).addClass("glyphicon glyphicon-ok");#}
+                                {#                    $("#bt".concat(ideaNum.toString())).text("已投");#}
+                                $("#bt".concat(ideaNum.toString())).parent().addClass("disabled hidden");
+                                checkVoteRecord();
+                                alert("投票成功");
+                                //var parsed = JSON.parse(response);
 
-                        {#                  $("#bt".concat(ideaNum.toString())).parent().parent().parent().addClass("voted");#}
+                                {#                  $("#bt".concat(ideaNum.toString())).parent().parent().parent().addClass("voted");#}
 
 
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                }else{
-                     alert("请选择礼物");
-                }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                             }else{
+                             alert("请选择礼物");
+                             }
 
-            }
+                    }
+             }
 
+    }
+    function checkAvailableGift(gifttype) {
 
     }
 
+    function getGiftValue(gifttype){
+         var giftvalue=0;
+         switch (gifttype){
+             case 1:
+                 giftvalue = 3;
+                 break;
+             case 2:
+                 giftvalue = 3;
+                 break;
+             case 3:
+                 giftvalue = 3;
+                 break;
+             case 4:
+                 giftvalue = 2;
+                 break;
+             case 5:
+                 giftvalue = 2;
+                 break;
+             case 6:
+                 giftvalue = 2;
+                 break;
+             case 7:
+                 giftvalue = 1;
+                 break;
+             case 8:
+                 giftvalue = 1;
+                 break;
+             case 9:
+                 giftvalue = 1;
+                 break;
+
+         return giftvalue;
+         }
+     }
 
 </script>
 </body>
