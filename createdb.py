@@ -6,8 +6,12 @@ conn = sqlite3.connect('mydb.db')
 c = conn.cursor()
 
 # 创建表
-c.execute('''drop table if exists voting''')
-c.execute('''create table voting ( voterid INTEGER,  ideanum INTEGER, gift INTEGER,value INTEGER,comment string )''')
+# c.execute('''drop table if exists voting''')
+# c.execute('''create table voting ( voterid INTEGER,  ideanum INTEGER, gift INTEGER,value INTEGER,comment string )''')
+#
+c.execute('''drop table if exists msg''')
+c.execute('''create table msg (id integer primary key autoincrement,voterid INTEGER,  ideanum INTEGER, comment string ,ideaowner INTEGER )''')
+
 
 # 数据
 # 格式：月份,蒸发量,降水量
@@ -31,6 +35,12 @@ print(c.fetchall())
 
 # 查询方式二_2
 res = c.execute('SELECT * FROM voting')
+print(res.fetchall())
+
+
+
+# 查询方式二_2
+res = c.execute('SELECT * FROM msg')
 print(res.fetchall())
 
 # 关闭

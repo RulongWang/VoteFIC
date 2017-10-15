@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GLCM China Innovation Idea Voting</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  
+  .item{
+  	margin:10px;
+  	padding:10px;
+  	border:1px solid #eee;
+  }
+  .itembg{
+    background: #dddddd;
+  }
+  
+  .topspace{
+  	margin-top:10px;
+  }
+     .bottomspace{
+      margin:10px;
+      padding:10px;
+      text-align: center;
+      border-radius: 10px;
+  }
+ .itembg{
+    background: #dddddd;
+  }
+#lucynumber{
+    text-align: center;
+    font-size: 40px;
+}
+  </style>
+</head>
+<body>
+  
+<div class="container-fluid ">
+
+<div class="jumbotron topspace">
+    <h1>幸运大抽奖</h1>
+    <p>To make GLCM stronger,better</p>
+  </div>
+{#<div class="row item">#}
+{#  <div class="col-md-12 col-sm-12 " >#}
+{#  Voting Result   	#}
+{#  </div>#}
+{# #}
+{#</div>#}
+
+
+ <div class="row item col-lg-6 col-sm-12 col-xs-12">
+<div class="panel panel-primary">
+  <div class="panel-heading"> <h3 class="panel-title">幸运大抽奖</h3></div>
+     <div class="panel-body">
+
+         <ul class="list-group" id="lucydog">
+             <li class="list-group-item itembg " ><p>目前有{{ votecount }}位同事参加了投票</p>中奖名单如下：</li>
+
+         </ul>
+            <div class="well well-lg" id="lucynumber"></div>
+         <button class="btn btn-success" onclick="startLuckyDraw();"><span class="glyphicon glyphicon-play">开始抽奖</span></button>
+
+   </div>
+</div>
+
+ </div>
+</div>
+<div id="footer"class="row bottomspace jumcolor ">
+    <p>2017 GLCM FIC Committee</p>
+</div>
+
+<script>
+    var items = {{ lucydogs }};
+     var luckynumber;
+    $(function(){
+
+    });
+      function getVoteResults() {
+         $.ajax({
+                url: '/getVotes',
+                type: 'POST',
+                success: function(response){
+
+                    console.log(response);
+                    console.log(response.length);
+                    chance = response.length;
+                    for (var i in response){
+                        //alert(response[i].value + "选手号码" + response[i].ideanum);
+                        if(response[i].value == 3){
+                            $("#gifttype option[value='1']" ).remove();
+                            $("#gifttype option[value='2']" ).remove();
+                            $("#gifttype option[value='3']" ).remove();
+
+                        }
+                        if(response[i].value == 2){
+                            $("#gifttype option[value='4']" ).remove();
+                            $("#gifttype option[value='5']" ).remove();
+                            $("#gifttype option[value='6']" ).remove();
+
+                        }
+                        if(response[i].value ==1){
+                            $("#gifttype option[value='7']" ).remove();
+                            $("#gifttype option[value='8']" ).remove();
+                            $("#gifttype option[value='9']" ).remove();
+                        }
+                    }
+
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+     }
+    function startLuckyDraw(){
+        for(var i =0;i<200000;i++){
+            setTimeout(function(){
+                $("#lucynumber").text(getRandom());
+             }, 2000);
+        }
+{#        setTimeout(function(){#}
+{#            $("#lucydog").append("<li class='list-group-item itembg '>"+ $("#lucynumber").text() +"号同事</li>")#}
+{#        },2000*200000);#}
+    }
+    function getRandom(){
+        var item = items[Math.floor(Math.random()*items.length)];
+        return item;
+    }
+</script>
+</body>
+</html>

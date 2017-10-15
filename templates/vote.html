@@ -16,12 +16,20 @@
   	padding:10px;
   	border:1px solid #eee;
   }
+  .comment{
+      font-weight: bold;
+      color: #0088cc;
+  }
   .desc{
   
   }
-  .voted{
-      backgroun-color:red;
+  .owner{
+      color:#FF0000;
+
   }
+{#  .voted{#}
+{#      background-color:red;#}
+{#  }#}
   .jumcolor{
   	background-color:#FF0000;
   	color:#FFFFFF;
@@ -29,12 +37,19 @@
   .topspace{
   	margin-top:10px;
   }
+
+  .rightspace{
+      margin-right:10px;
+  }
      .bottomspace{
       margin:10px;
       padding:10px;
       text-align: center;
       border-radius: 10px;
   }
+      .padd{
+          padding:2px;
+      }
   </style>
 </head>
 <body>
@@ -89,7 +104,43 @@
 
     </div>
   </div>
-</div>
+</div><!--end of Modal gift-->
+    <div class="modal fade bd-msg-modal-sm" tabindex="-1" role="dialog" aria-labelledby="bd-msg-modal-sm" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">给<span id="ideaNum2"></span>号创业者的讨论</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div>
+              <ul class="list-group" id="msglist">
+                  <li class="list-group-item">
+                      你的app真不错
+                  </li>
+              </ul>
+          </div>
+          <form action="{{ url_for('addMsg') }}" method="post">
+
+            <label for="voteid" id="votelabel" class="form-control-label">请输入你的留言</label>
+
+            <input type="text" class="form-control" id="msg" name="msg">
+
+             <label for="ideaowner" id="ideaownerlabel" class="form-control-label">我是本Idea的拥有者</label>
+              <input type ="checkbox" id="ideaowner" class="padd"  >
+
+          <div class="modal-footer">
+            <button type="button" id = "doVote" class="btn btn-success" onclick="leaveMsg();" data-dismiss="modal">留言</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">离开</button>
+          </div>
+        </form>
+       </div>
+
+    </div>
+  </div>
+</div><!--end of Modal Msg-->
 <div class="row item">
   <div class="col-md-12 col-sm-12 " >
   	<p>Description </p>
@@ -121,30 +172,10 @@
     </div>
     
     <div class="col-md-4 col-sm-4 pull-right ">
-       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(1);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt1" class="">Vote</span></button>
-   </div>	
-    	  	
-  </div> 
- 
-</div><!-- end of row-->
- <div class="row item">
-  <div class="col-md-12 col-sm-12" >
-  	<div class="col-md-4 col-sm-4 pull-left">
-       
-       <img src="/static/dji.jpg"  class="img-circle" width ="100" height="100" alt="1">
-              
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(1);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt1" class="">投票</span></button>
+        <button class="btn pull-right rightspace" onclick="updateIdeaNum2(1);"type="button" data-toggle="modal" data-target=".bd-msg-modal-sm">评论 <span class="badge" id="bd1"></span></button>
+
     </div>
-    
-    <div class="desc col-md-4 col-sm-4">
-    	<p>
-    		Description of your team your idea
-      </p>
-    	
-    </div>
-    
-    <div class="col-md-4 col-sm-4 pull-right ">
-       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(2);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt2" class="">Vote</span></button>
-   </div>	
     	  	
   </div> 
  
@@ -152,72 +183,135 @@
   <div class="row item">
   <div class="col-md-12 col-sm-12" >
   	<div class="col-md-4 col-sm-4 pull-left">
-       
+
        <img src="/static/dji.jpg"  class="img-circle" width ="100" height="100" alt="1">
-              
+
     </div>
-    
+
     <div class="desc col-md-4 col-sm-4">
     	<p>
     		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+
       </p>
-    	
+
     </div>
-    
+
     <div class="col-md-4 col-sm-4 pull-right ">
-       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(3);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt3" class="">Vote</span></button>
-   </div>	
-    	  	
-  </div> 
- 
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(2);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt2" class="">投票</span></button>
+        <button class="btn pull-right rightspace" onclick="updateIdeaNum2(2);"type="button" data-toggle="modal" data-target=".bd-msg-modal-sm">评论 <span class="badge" id="bd2"></span></button>
+
+    </div>
+
+  </div>
+
+</div><!-- end of row-->
+  <div class="row item">
+  <div class="col-md-12 col-sm-12" >
+  	<div class="col-md-4 col-sm-4 pull-left">
+
+       <img src="/static/dji.jpg"  class="img-circle" width ="100" height="100" alt="1">
+
+    </div>
+
+    <div class="desc col-md-4 col-sm-4">
+    	<p>
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+
+      </p>
+
+    </div>
+
+    <div class="col-md-4 col-sm-4 pull-right ">
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(3);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt3" class="">投票</span></button>
+        <button class="btn pull-right rightspace" onclick="updateIdeaNum2(3);"type="button" data-toggle="modal" data-target=".bd-msg-modal-sm">评论 <span class="badge" id="bd3"></span></button>
+
+    </div>
+
+  </div>
+
 </div><!-- end of row-->
  <div class="row item">
   <div class="col-md-12 col-sm-12" >
   	<div class="col-md-4 col-sm-4 pull-left">
-       
+
        <img src="/static/dji.jpg"  class="img-circle" width ="100" height="100" alt="1">
-              
+
     </div>
-    
+
     <div class="desc col-md-4 col-sm-4">
     	<p>
     		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+
       </p>
-    	
+
     </div>
-    
+
     <div class="col-md-4 col-sm-4 pull-right ">
-       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(4);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt4" class="">Vote</span></button>
-   </div>	
-    	  	
-  </div> 
- 
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(4);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt4" class="">投票</span></button>
+        <button class="btn pull-right rightspace" onclick="updateIdeaNum2(4);"type="button" data-toggle="modal" data-target=".bd-msg-modal-sm">评论 <span class="badge" id="bd4"></span></button>
+
+    </div>
+
+  </div>
+
 </div><!-- end of row-->
-         <div class="row item">
+ <div class="row item">
   <div class="col-md-12 col-sm-12" >
   	<div class="col-md-4 col-sm-4 pull-left">
-       
-       <img src="/static/dji.jpg"  class="img-thumbnail" width ="100" height="100"  alt="2">
-              
+
+       <img src="/static/dji.jpg"  class="img-circle" width ="100" height="100" alt="1">
+
     </div>
-    
+
     <div class="desc col-md-4 col-sm-4">
     	<p>
     		Description of your team your idea
-      </p>
-    	
-    </div>
-    
-    <div class="col-md-4 col-sm-4 pull-right ">
-       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(5);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt5" class="">Vote</span></button>
-   </div>	
-    	  	
-  </div> 
- 
-</div><!-- end of row-->
-                
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
+    		Description of your team your idea
 
-	
+      </p>
+
+    </div>
+
+    <div class="col-md-4 col-sm-4 pull-right ">
+       <button type="button " class="pull-right btn btn-success "  onclick="updateIdeaNum(5);" data-toggle="modal" data-target=".bd-example-modal-sm"><span id = "bt5" class="">投票</span></button>
+        <button class="btn pull-right rightspace" onclick="updateIdeaNum2(5);"type="button" data-toggle="modal" data-target=".bd-msg-modal-sm">评论 <span class="badge" id="bd5"></span></button>
+
+    </div>
+
+  </div>
+
+</div><!-- end of row-->
 </div>
 <div id="footer"class="row bottomspace jumcolor ">
     <p>2017 GLCM FIC Committee</p>
@@ -235,6 +329,7 @@
              show_label: true
          });
          checkVoteRecord();
+         updateMsgNumber();
 
 
      });
@@ -298,13 +393,19 @@
     function updateIdeaNum(vote){
         ideaNum= vote;
         $("#ideaNum").html(vote);
+        $("#ideaNum2").html(vote);
         $("#ideavalue").val(vote);
         checkVoteRecord();
 
     }
+    function updateIdeaNum2(vote){
+        ideaNum= vote;
+        $("#ideaNum2").html(vote);
+        updateMsgList(ideaNum);
 
+    }
     function Vote(){
-            var ideavalue = ideaNum
+            var ideavalue = ideaNum;
             var gifttype = $('#gifttype').val();
             var comment = $('#comment').val();
 
@@ -384,7 +485,80 @@
          return giftvalue;
          }
      }
+    function leaveMsg(){
+            var ideavalue = ideaNum;
+            var msg = $('#msg').val();
+            var ideaowner = $('#ideaowner').prop("checked")
+            if (ideaowner){
+                ideaowner = 1;
+            }else{
+                ideaowner = 0;
+            }
+             $.ajax({
+                                   url: '/addMsg',
+                                   data: {ideavalue: ideavalue, msg: msg,ideaowner:ideaowner},
+                                    type: 'POST',
+                                      success: function (response) {
+    {#                                      updateMsgNumber();#}
+                                          console.log(response);
+                                          alert("留言成功");
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+             });
+            updateMsgNumber();
+        }
 
+    function updateMsgList(ideaNum){
+        $("#msglist").empty();
+        $('#msg').val('');
+
+        var ideavalue = ideaNum;
+             $.ajax({
+                                   url: '/queryMsg',
+                                   data: {ideavalue: ideavalue},
+                                   type: 'POST',
+                                      success: function (response) {
+    {#                                      updateMsgNumber();#}
+                                          for(var i = 0;i<response.length;i++) {
+                                              if (response[i].ideaowner == 1) {
+                                              $("#msglist").append("<li class='list-group-item'>创业者留言:<span class='owner'>&nbsp" + response[i].comment + "</span></li>");
+
+                                              } else {
+
+                                              $("#msglist").append("<li class='list-group-item'>" + response[i].voterid + "号同事留言:<span class='comment'>&nbsp" + response[i].comment + "</span></li>");
+                                              }
+                                          }
+                                          console.log(response);
+
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+             });
+    }
+
+    function updateMsgNumber(){
+
+        $.ajax({
+                                   url: '/updateMsgNum',
+                                   data: {status: 'query'},
+                                   type: 'POST',
+                                      success: function (response) {
+                                          for(var i = 0;i<response.length;i++){
+{#                                              alert("#bd"+response[i].ideanum);#}
+                                              $("#bd"+response[i].ideanum).text(response[i].m);
+
+                                          }
+                                          console.log(response);
+
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+             });
+     }
 </script>
 </body>
 </html>

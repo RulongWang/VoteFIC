@@ -14,10 +14,13 @@
   	padding:10px;
   	border:1px solid #eee;
   }
-  .desc{
-  
+  .itembg{
+    background: #dddddd;
   }
-  
+    .jumcolor{
+  	background-color:#FF0000;
+  	color:#FFFFFF;
+  }
   .topspace{
   	margin-top:10px;
   }
@@ -27,64 +30,42 @@
       text-align: center;
       border-radius: 10px;
   }
+
   </style>
 </head>
 <body>
   
 <div class="container-fluid ">
 
-<div class="jumbotron topspace">
-    <h1>Voting for GLCM Innovation</h1> 
-    <p>To make GLCM better</p> 
+<div class="jumbotron topspace jumcolor">
+    <h1>投票结果</h1>
+    <p>To make GLCM stronger,better</p>
   </div>
-<div class="row item">
-  <div class="col-md-12 col-sm-12 " >
-  Voting Result   	
-  </div>
- 
-</div>
+{#<div class="row item">#}
+{#  <div class="col-md-12 col-sm-12 " >#}
+{#  Voting Result   	#}
+{#  </div>#}
+{# #}
+{#</div>#}
 
-<div class="row item">
- <div class="progress">
-  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
-  aria-valuemin="0" aria-valuemax="120" style="width:22%">
-    2% Raymond
-  </div>
-</div>
 
-<div class="progress">
-  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
-  aria-valuemin="0" aria-valuemax="100" style="width:50%">
-    50% Complete (info)
-  </div>
-</div>
+ <div class="row item col-lg-6 col-sm-12 col-xs-12">
+     <ul class="list-group">
+          <li class="list-group-item itembg ">
+    <span class="badge">获得金币总额</span>
+    创业者ID
+  </li>
+         {% for result in results %}
+          <li class="list-group-item"><span class="badge">{{ result.s }}</span>{{ result.ideanum }}号创业者</li>
+         {% endfor %}
 
-<div class="progress">
-  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
-  aria-valuemin="0" aria-valuemax="100" style="width:60%">
-    60% Complete (warning)
-  </div>
-</div>
 
-<div class="progress">
-  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70"
-  aria-valuemin="0" aria-valuemax="100" style="width:70%">
-    70% Complete (danger)
-  </div>
-</div>
-	
-</div><!-- end of row-->
+</ul>
+ </div>
 </div>
 <div id="footer"class="row bottomspace jumcolor ">
     <p>2017 GLCM FIC Committee</p>
 </div>
 
-<script>
-
-    $(function(){
-
-    });
-
-</script>
 </body>
 </html>

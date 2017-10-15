@@ -86,10 +86,10 @@ def addVote():
         ideaNum = int(request.form["ideavalue"])
         gift =int(request.form["gifttype"])
         comment = request.form["comment"]
-        if gift in {1,2,3}:
+        if gift in [1, 2, 3]:
             value = 3
         else:
-            if gift in {4,5,6}:
+            if gift in [4,5,6]:
                 value = 2
             else:
                 value = 1
@@ -105,6 +105,7 @@ def getVotes():
     else:
         #voteID = request.args.get('voterid')
         voteID = int(session['voteid'])
+    # return redirect(url_for('login'))
 
     if request.method == 'POST':
         rs = query_db('select ideanum,value from voting where voterid=?',(voteID,))
@@ -114,11 +115,38 @@ def getVotes():
         rs = query_db('select ideanum,value from voting where voterid=?',(voteID,))
         return jsonify(rs)
 
+@app.route("/getResult",methods=['POST','GET'])
+def getResult():
+    error = None
+    if request.method == 'POST':
+        rs = query_db('SELECT ideanum,gift,count(gift) as s FROM voting group by gift ')
+        print rs
+        return jsonify(rs)
+    else:
+        rs = query_db('SELECT ideanum,gift,count(gift) as s FROM voting group by gift ')
+        print rs
+
+        return jsonify(rs)
+
 @app.route("/s",methods=['POST','GET'])
 def showResult():
     error = None
-    return render_template('result.html')
+    rs = query_db('SELECT DISTINCT ideanum,sum(value) as s FROM voting group by ideanum order by s desc  ')
+    print rs
+    # return jsonify(rs)
+    return render_template('result.html',results=rs)
 
+
+@app.route("/l",methods=['POST','GET'])
+def luckyDraw():
+    error = None
+    rs = query_db('SELECT DISTINCT voterid from voting')
+    luckydogs = []
+    for x in rs:
+        luckydogs.append(x.values())
+    # luckydogs = rs.values()
+    print luckydogs
+    return render_template('luckydraw.html',lucydogs=luckydogs,votecount=len(luckydogs))
 
 @app.route("/reset",methods=['POST','GET'])
 def reset():
@@ -128,12 +156,14 @@ def reset():
     if voteID == 88:
 
         if request.method == 'POST':
-            rs = query_db('delete *  from voting')
+            rs = query_db('delete from voting')
+            rs2 = query_db('delete from msg')
             print rs
-            return jsonify({'status':'no success'})
+            return jsonify({'status':'all data deleted successfully'})
         else:
             rs = query_db('delete from voting')
-            return jsonify({'status':'no success'})
+            rs2 = query_db('delete from msg')
+            return jsonify({'status':'all data deleted successfully'})
     else:
         return jsonify({'status':'no auth'})
 
@@ -168,8 +198,37 @@ def getVoteInfo():
     # return '<br>'.join(str(re) for re in result)
 
 
+@app.route("/addMsg", methods=['POST', 'GET'])
+def addMsg():
+    voteID = int(session["voteid"])
+    ideaNum = int(request.form["ideavalue"])
+    comment = request.form["msg"]
+    ideaowner = request.form["ideaowner"]
+    res = query_db('insert into msg (voterid, ideanum,comment,ideaowner) values(?,?,?,?)', (voteID, ideaNum,comment,ideaowner))
+    print res
+    return jsonify(res)
+@app.route("/queryMsg", methods=['POST', 'GET'])
+def queryMsg():
+    if request.method == 'POST':
+        ideaNum = int(request.form["ideavalue"])
+        res = query_db('select * from msg where ideanum = ? order by id DESC ', (ideaNum,))
+        print res
+        return jsonify(res)
+    else:
+        pass
+
+@app.route("/updateMsgNum",methods=['POST','GET'])
+def updateMsgNum():
+    if request.method == 'POST':
+        res = query_db('select ideanum,count(*) as m from msg group by ideanum')
+        print res
+        return jsonify(res)
+    else:
+        pass
+
+
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == '__main__':
-    app.debug = False
+    app.debug = True
     app.run(host='0.0.0.0')
