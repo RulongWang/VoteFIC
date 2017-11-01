@@ -52,7 +52,7 @@ def index():
 def login():
     error = None
     if request.method == 'POST':
-        if int(request.form['voteid']) not in range(1 , 201):
+        if int(request.form['voteid']) not in range(1 , 223):
             print "invalid voteid"
             error = "invalid voteID"
             return render_template('login.html', error=error)
@@ -224,7 +224,7 @@ def updateMsgNum():
         print res
         return jsonify(res)
     else:
-        pass
+        passs
 
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
