@@ -52,7 +52,7 @@ def index():
 def login():
     error = None
     if request.method == 'POST':
-        if int(request.form['voteid']) not in range(1 , 223):
+        if int(request.form['voteid']) not in range(1 , 236):
             print "invalid voteid"
             error = "invalid voteID"
             return render_template('login.html', error=error)
@@ -217,6 +217,21 @@ def queryMsg():
     else:
         pass
 
+
+@app.route("/qq",methods=['GET'])
+def getAll():
+    ideanum = request.args.get('idea')
+    res = query_db('select * from voting where ideanum = ? ', (ideanum,))
+    print res
+    return jsonify(res)
+
+@app.route("/m",methods=['GET'])
+def getIdeas():
+    id = request.args.get('id')
+    res = query_db('select * from voting where voterid = ? ', (id,))
+    print res
+    return jsonify(res)
+
 @app.route("/updateMsgNum",methods=['POST','GET'])
 def updateMsgNum():
     if request.method == 'POST':
@@ -224,7 +239,7 @@ def updateMsgNum():
         print res
         return jsonify(res)
     else:
-        passs
+        pass
 
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
